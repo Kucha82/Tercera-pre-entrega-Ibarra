@@ -13,5 +13,5 @@ def saludo(request):
 
 def hora(request):
     now = datetime.now()
-    formatted_time = now.strftime("%A %d-%m-%y %H:%M:%S")
+    formatted_time = now.strftime("%A %d/%m/%y %H:%M:%S")
     return HttpResponse(formatted_time)
