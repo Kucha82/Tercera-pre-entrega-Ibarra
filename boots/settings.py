@@ -55,7 +55,7 @@ ROOT_URLCONF = 'boots.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [r'Appboots/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
