@@ -4,7 +4,15 @@ from django.shortcuts import render
 
 
 def inicio(request):
-    return render(request, "Appboots/index.html")
+    return render(request, "Appboots/base.html")
+
+
+def cursos(request):
+    return render(request, "Appboots/cursos.html")
+
+
+def guitarra(request):
+    return render(request, "Appboots/guitarra.html")
 
 
 def saludo(request):
