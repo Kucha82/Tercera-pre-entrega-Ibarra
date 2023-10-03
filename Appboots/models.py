@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
 
 
 class Curso(models.Model):
@@ -26,3 +25,10 @@ class Entregable(models.Model):
     nombre = models.CharField(max_length=30)
     fecha_de_entrega = models.DateField()
     entregado = models.BooleanField()
+
+
+class Familiar(models.Model):
+    nombre = models.CharField(max_length=30)
+    apellido = models.CharField(max_length=200)
+    parentesco = models.CharField(max_length=15)
+    edad = models.CharField(max_length=3)
