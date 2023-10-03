@@ -7,6 +7,9 @@ class Curso(models.Model):
     nombre = models.CharField(max_length=40)
     camada = models.IntegerField()
 
+    def __str__(self) -> str:
+        return f"Nombre: {self.nombre} - Camada: {self.camada}"
+
 
 class Estudiante(models.Model):
     nombre = models.CharField(max_length=40)
@@ -32,3 +35,6 @@ class Familiar(models.Model):
     apellido = models.CharField(max_length=200)
     parentesco = models.CharField(max_length=15)
     edad = models.CharField(max_length=3)
+
+    def __str__(self) -> str:
+        return f"Nombre: {self.nombre} - Parentesco: {self.parentesco}"
