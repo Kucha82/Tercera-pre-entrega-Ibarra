@@ -1,0 +1,19 @@
+{% extends "Appboots/base.html" %}
+{% load static %}
+
+{% block section4 %}
+
+<h1>Detalle Del Curso</h1>
+
+<body>
+    
+    <h2>Detalles del curso</h2>
+    <p>Nombre: {{ curso.nombre }}</p>
+    <p>Camada: {{ curso.camada }}</p>
+    <p>Horario: {{ curso.horario }}</p>
+    <p>Instructor: {{ curso.instructor }}</p>
+
+    <a href="{% url 'ReadCursos' %}">Regresar</a>
+
+</body>
+{% endblock %}

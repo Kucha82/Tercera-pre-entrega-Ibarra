@@ -1,0 +1,14 @@
+{% extends "Appboots/base.html" %}
+{% load static %}
+
+{% block section4 %}
+
+<form method="POST" action="/eliminar-curso">
+    {% csrf_token %}
+    <p>¿Estás seguro que deseas eliminar el curso "{{ object }}"?</p>
+    <button type="submit" name="action" value="eliminar">Delete</button>
+     <button><a href="{% url 'List' %}">Cancelar</a></button>
+</form>
+
+
+{% endblock %}

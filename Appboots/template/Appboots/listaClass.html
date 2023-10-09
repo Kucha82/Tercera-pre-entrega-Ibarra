@@ -1,0 +1,20 @@
+{% extends "Appboots/base.html" %}
+{% load static %}
+
+{% block section4 %}
+<body>
+<h1>Cursos - Coder</h1>   
+<ul> 
+
+    {% for curso in object_list %}
+        <li>Curso: {{ curso.nombre }} / Camada: {{curso.camada}} 
+        <button>
+            <a href="{% url 'Detail' curso.id %}">View</a>
+            <a href="{% url 'Delete' curso.id %}">Delete</a>
+            <a href="{% url 'Edit' curso.id %}">Edit</a></li>
+        </button>
+    {% endfor %}
+</ul>
+</body>
+
+{% endblock %}

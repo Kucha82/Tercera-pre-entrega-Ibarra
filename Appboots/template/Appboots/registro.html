@@ -1,0 +1,16 @@
+{% extends "Appboots/base.html" %}
+{% load static %}
+
+{% block section4 %}
+
+<h2>{{ mensaje }}</h2>
+<h1>Registrarse</h1>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrate!</button>
+    </form>
+</body>
+
+{% endblock %}

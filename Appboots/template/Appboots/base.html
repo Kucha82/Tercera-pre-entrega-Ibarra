@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html lang="en">
     <head>
       
@@ -26,16 +27,46 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Saludo' %}">saludo</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Hora' %}">hora</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Cursos' %}">cursos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Guitarra' %}">guitarra</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'Lista' %}">familiares</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'cursoFormulario' %}">cursoFormulario</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'BuscarCurso' %}">buscar curso</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'BuscarFamiliar' %}">buscar familiar</a></li>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              Paginas
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'Saludo' %}">saludo</a></li>
+                              <li><a class="dropdown-item" href="{% url 'Hora' %}">hora</a></li>
+                              <li><a class="dropdown-item" href="{% url 'Cursos' %}">cursos</a></li>
+                              <li><a class="dropdown-item" href="{% url 'Guitarra' %}">guitarra</a></li>
+                              <li><a class="dropdown-item" href="{% url 'Lista' %}">familiares</a></li>
+                            </ul>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              Buscar
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'BuscarCurso' %}">buscar curso</a></li>
+                              <li><a class="dropdown-item" href="{% url 'BuscarFamiliar' %}">buscar familiar</a></li>
+                             </ul>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              Cargar
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'cursoFormulario' %}">cursoFormulario</a></li>
+                            </ul>
+                          </div>
+                          <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              Reads
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'ReadCursos' %}">readCursos</a></li>
+                            </ul>
+                          </div>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Register' %}">register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Login' %}">login</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'Inicio' %}">inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Sign Up</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,6 +86,9 @@
             <div class="bg-circle-4 bg-circle"></div>
         </header>
       
+        {% block main %}
+        {% endblock main %}
+
         {% block section1 %}
         {% endblock %}
 
@@ -65,6 +99,7 @@
         {% endblock %}
         
         {% block section4 %}
+        <h2>{{ mensaje }}</h2>
         {% endblock %}
         
         {% block section5 %}

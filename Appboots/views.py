@@ -2,7 +2,14 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import render
 from .models import Curso, Familiar
-from .forms import CursoFormulario, BuscaCursoForm, BuscarFamiliar
+from .forms import CursoFormulario, BuscaCursoForm, BuscarFamiliar, UserRegisterform
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 
 def inicio(request):
@@ -13,6 +20,7 @@ def cursos(request):
     return render(request, "Appboots/cursos.html")
 
 
+@login_required
 def guitarra(request):
     return render(request, "Appboots/guitarra.html")
 
@@ -119,5 +127,127 @@ def buscarFamiliar(request):
     return render(request, "Appboots/apiCursoFormulario.html", {"miFormulario": miFormulario})
 
 
-def mostrar_familiar(request, ):
+def mostrar_familiar(request):
     pass
+
+
+def read_cursos(request):
+
+    cursos = Curso.objects.all()  # trae todos los cursos
+
+    contexto = {"cursos": cursos}
+
+    return render(request, "Appboots/readCursos.html", contexto)
+
+
+def ver_curso(request):
+
+    curso = Curso.objects.get(id=1)
+    return render(request, 'Appboots/ver_curso.html', {'curso': curso})
+
+
+def delete_curso(request, curso_id):
+
+    curso = Curso.objects.get(id=int(curso_id))
+    curso.delete()
+
+    # vuelvo al menú
+    cursos = Curso.objects.all()  # trae todos los cursos
+    return render(request, "Appboots/readCursos.html", {"cursos": cursos})
+
+
+def edit_curso(request, curso_id):
+    if request.method == "POST":
+        # Aqui me llega la informacion del html
+        miFormulario = CursoFormulario(request.POST)
+
+        if miFormulario.is_valid():
+            informacion = miFormulario.cleaned_data
+
+            curso = Curso.objects.get(id=curso_id)
+            curso.nombre = informacion["curso"]
+            curso.camada = informacion["camada"]
+            curso.save()
+
+            return render(request, "Appboots/base.html")
+    else:
+        curso = Curso.objects.get(id=curso_id)
+        miFormulario = CursoFormulario(
+            initial={"curso": curso.nombre, "camada": curso.camada})
+
+    return render(request, "Appboots/editCurso.html", {"miFormulario": miFormulario})
+
+
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+
+        if form.is_valid():
+            usuario = form.cleaned_data.get("username")
+            contra = form.cleaned_data.get("password")
+
+            user = authenticate(username=usuario, password=contra)
+
+            if user is not None:
+                login(request, user)
+                return render(request, "Appboots/base.html", {"mensaje": f"Bienvenido {usuario}"})
+            else:
+                form = AuthenticationForm()
+                return render(request, "Appboots/login.html", {"mensaje": "Error, datos incorrectos", "form": form})
+
+        else:
+            return render(request, "Appboots/base.html", {"mensaje": "Error, formulario erroneo"})
+
+    form = AuthenticationForm()
+
+    return render(request, "Appboots/login.html", {"form": form})
+
+
+def register(request):
+    if request.method == "POST":
+        # form = UserCreationForm(request.POST)
+        form = UserRegisterform(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            form.save()
+            return render(request, "Appboots/base.html", {"mensaje": f"{username} Usuario Creado ;)"})
+    else:
+        # form = UserCreationForm()
+        form = UserRegisterform(request.POST)
+
+    return render(request, "Appboots/registro.html", {"form": form})
+
+
+#################################################################################################
+
+
+class CursoListView(ListView):
+    model = Curso
+    template_name = "Appboots/listaClass.html"
+
+
+class CursoDetailView(DetailView):
+    queryset = Curso.objects.all()
+    template_name = "Appboots/cursoDetalle.html"
+
+
+class CursoCreateView(CreateView):
+    model = Curso
+    template_name = "Appboots/cursoEdit.html"
+    success_url = reverse_lazy("List")
+    fields = ["nombre", "camada"]
+
+
+class CursoUpdateView(UpdateView):
+    model = Curso
+    template_name = "Appboots/cursoEdit.html"
+    success_url = reverse_lazy("List")
+    # success_url = "Appboots/clases/lista"
+    fields = ["nombre", "camada"]
+
+
+class CursoDeleteView(DeleteView):
+    model = Curso
+    success_url = reverse_lazy("List")
+    template_name = "Appboots/cursoDelete.html"
