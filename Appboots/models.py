@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
+
 
 # Create your models here.
 
@@ -38,3 +41,16 @@ class Familiar(models.Model):
 
     def __str__(self) -> str:
         return f"Nombre: {self.nombre} - Parentesco: {self.parentesco}"
+
+
+class Imagen(models.Model):
+    # vinvulo con el usuario
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    # Subcaperta avatares de media :)
+    imagen = models.ImageField(upload_to='imagenes', null=True, blank=True)
+
+    # def d(self):
+    #     return self.user.last_name
+
+    def __str__(self):
+        return f"media/{self.imagen}"

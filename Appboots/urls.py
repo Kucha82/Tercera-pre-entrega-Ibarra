@@ -2,11 +2,13 @@ from django.urls import path
 from .views import (
     inicio, saludo, hora, cursos, guitarra, lista, cursoFormulario,
     buscarCurso, buscarFamiliar, read_cursos, delete_curso, edit_curso, login_request,
-    register, ver_curso
+    register, ver_curso, editarPerfil
 )
 from django.contrib.auth.views import LogoutView
 from .views import (CursoCreateView, CursoListView, CursoDeleteView, CursoUpdateView,
                     CursoDetailView)
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', inicio, name="Inicio"),
@@ -26,7 +28,10 @@ urlpatterns = [
     path('register/', register, name='Register'),
     path('logout/', LogoutView.as_view(
         template_name='Appboots/logout.html'), name='Logout'),
+    path('editarPerfil', editarPerfil, name="EditarPerfil"),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
     path('clases/lista/', CursoListView.as_view(), name="List"),

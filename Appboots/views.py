@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import render
-from .models import Curso, Familiar
-from .forms import CursoFormulario, BuscaCursoForm, BuscarFamiliar, UserRegisterform
+from .models import Curso, Familiar, Imagen, User
+from .forms import (CursoFormulario, BuscaCursoForm, BuscarFamiliar, UserRegisterform,
+                    UserEditForm, MyUserEditForm)
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -140,9 +141,8 @@ def read_cursos(request):
     return render(request, "Appboots/readCursos.html", contexto)
 
 
-def ver_curso(request):
-
-    curso = Curso.objects.get(id=1)
+def ver_curso(request, curso_id):
+    curso = Curso.objects.get(id=curso_id)
     return render(request, 'Appboots/ver_curso.html', {'curso': curso})
 
 
@@ -217,6 +217,59 @@ def register(request):
         form = UserRegisterform(request.POST)
 
     return render(request, "Appboots/registro.html", {"form": form})
+
+
+def editarPerfil(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+
+        miFormulario = MyUserEditForm(request.POST, request.FILES)
+        # archivo_form = AvatarForm(request.POST, request.FILES)
+
+        if miFormulario.is_valid():  # and archivo_form.is_valid():
+
+            informacion = miFormulario.cleaned_data
+            usuario.email = informacion['email']
+            # usuario.password1 = informacion['password1']
+            # usuario.password2 = informacion['password2']
+            usuario.last_name = informacion['last_name']
+            usuario.first_name = informacion['first_name']
+            usuario.save()
+
+            # miFormulario.save()
+            # perfil.avatar = archivo_form.cleaned_data["avatar"]
+            # perfil.save()
+
+            user = User.objects.get(username=request.user)
+            try:
+                avat = Imagen.objects.get(user=user)
+            except Imagen.DoesNotExist:
+                avat = Imagen(user=user, imagen=informacion.get("imagen"))
+                avat.save()
+            else:
+                avat.imagen = miFormulario.cleaned_data["avatar"]
+                avat.save()
+
+            # archivo_form.save()
+
+            return render(request, "Appboots/base.html")
+        else:
+            miFormulario = MyUserEditForm()
+
+    else:
+        miFormulario = MyUserEditForm(
+            initial={
+                'email': usuario.email,
+                'last_name': usuario.last_name,
+                'first_name': usuario.first_name
+            }
+        )
+    return render(request, "Appboots/editUser.html", {"miFormulario": miFormulario,
+                                                      "usuario": usuario
+                                                      }
+                  )
 
 
 #################################################################################################
