@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Bootstrap Template</title>
+        <title>Pre Entrega N° 3</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -30,6 +30,10 @@
                         <li class="nav-item"><a class="nav-link" href="{% url 'Hora' %}">hora</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'Cursos' %}">cursos</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'Guitarra' %}">guitarra</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'Lista' %}">familiares</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'cursoFormulario' %}">cursoFormulario</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'BuscarCurso' %}">buscar curso</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'BuscarFamiliar' %}">buscar familiar</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'Inicio' %}">inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Sign Up</a></li>
                     </ul>
@@ -56,6 +60,17 @@
 
         {% block section2 %}
         {% endblock %}
+
+        {% block section3 %}
+        {% endblock %}
+        
+        {% block section4 %}
+        {% endblock %}
+        
+        {% block section5 %}
+        {% endblock %}
+       
+    
 
         <!-- Footer-->
         <footer class="py-5 bg-black">

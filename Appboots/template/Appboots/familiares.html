@@ -1,0 +1,61 @@
+{% extends "Appboots/base.html" %}
+{% load static %}
+
+{% block section3 %}
+
+    <title>Lista de familiares</title>
+    <style>
+   
+        h1 {
+            color: rgb(47, 0, 255);
+        
+        }
+        
+        th {
+            background-color: yellow;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid black; /* Añade un borde a los encabezados */
+        }
+        
+        td {
+            color: blue;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid black; /* Añade un borde a las celdas */
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgb(211, 211, 211);
+        }
+       
+
+       
+
+        </style> 
+</head>
+<body>
+    <h1>Lista de familiares</h1>
+    <table>
+        <tr>
+          <th>N°</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Parentesco</th>
+          <th>Edad</th>
+        </tr>
+        {% for familiar in familiares %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ familiar.nombre }}</td>
+          <td>{{ familiar.apellido }}</td>
+          <td>{{ familiar.parentesco }}</td>
+          <td>{{ familiar.edad }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+</body>
+</html>
+
+{% endblock %}
